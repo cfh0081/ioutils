@@ -43,7 +43,7 @@ func IsDir(dir string) bool {
 }
 
 // 下载文件
-func DownloadFileWithDirAndName(ctx context.Context, srcUrl string, targetDir string, targetName string, funcs ...func(length, downloaded int64)) (err error) {
+func DownloadWithDirAndName(ctx context.Context, srcUrl string, targetDir string, targetName string, funcs ...func(length, downloaded int64)) (err error) {
 	var fsize int64 = 0
 	var buf = make([]byte, 32*1024)
 	var written int64
@@ -153,4 +153,15 @@ func DownloadFileWithDirAndName(ctx context.Context, srcUrl string, targetDir st
 	}
 
 	return
+}
+
+// 将文件下载存储到指定路径
+func DownloadWithPath(ctx context.Context, srcUrl string, targetPath string, funcs ...func(length, downloaded int64)) (err error) {
+	parent, name := filepath.Split(targetPath)
+	return DownloadWithDirAndName(ctx, srcUrl, parent, name, funcs...)
+}
+
+// 将文件下载存储到指定目录
+func DownloadWithDir(ctx context.Context, srcUrl string, targetDir string, funcs ...func(length, downloaded int64)) (err error) {
+	return DownloadWithDirAndName(ctx, srcUrl, targetDir, "", funcs...)
 }

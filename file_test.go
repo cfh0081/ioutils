@@ -78,7 +78,7 @@ func TestIsDir(t *testing.T) {
 	assert.True(t, r)
 }
 
-// func TestDownloadFileWithDirAndName(t *testing.T) {
+// func TestDownloadWithDirAndName(t *testing.T) {
 // 	tempDir, err := ioutil.TempDir("", "to_store") // 在DIR目录下创建tmp为目录名前缀的目录，DIR必须存在，否则创建不成功
 // 	assert.Nil(t, err)
 
@@ -87,15 +87,31 @@ func TestIsDir(t *testing.T) {
 // 	srcUrl := `替换成有意义的url后再测试`
 // 	name := "what.apk"
 // 	targetPath := filepath.Join(tempDir, name)
-// 	err = DownloadFileWithDirAndName(context.Background(), srcUrl, tempDir, name)
+// 	err = DownloadWithDirAndName(context.Background(), srcUrl, tempDir, name)
 // 	assert.Nil(t, err)
 // 	r := Exists(targetPath)
 // 	assert.True(t, r)
 
-// 	// 设置成默认名称
+// 	// 需要先设置成默认名称
 // 	name = "default.apk"
 // 	targetPath = filepath.Join(tempDir, name)
-// 	err = DownloadFileWithDirAndName(context.Background(), srcUrl, tempDir, "")
+// 	err = DownloadWithDirAndName(context.Background(), srcUrl, tempDir, "")
+// 	assert.Nil(t, err)
+// 	r = Exists(targetPath)
+// 	assert.True(t, r)
+// 	os.Remove(targetPath)
+
+// 	name = "android.apk"
+// 	targetPath = filepath.Join(tempDir, name)
+// 	err = DownloadWithPath(context.Background(), srcUrl, targetPath)
+// 	assert.Nil(t, err)
+// 	r = Exists(targetPath)
+// 	assert.True(t, r)
+
+// 	// 需要先设置成默认名称
+// 	name = "default.apk"
+// 	targetPath = filepath.Join(tempDir, name)
+// 	err = DownloadWithDir(context.Background(), srcUrl, tempDir)
 // 	assert.Nil(t, err)
 // 	r = Exists(targetPath)
 // 	assert.True(t, r)
