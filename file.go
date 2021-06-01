@@ -110,31 +110,28 @@ func DownloadWithDirAndName(ctx context.Context, srcUrl string, targetDir string
 	for {
 		// 读取bytes
 		cnt, readErr := resp.Body.Read(buf)
-		if readErr == nil {
-			if cnt > 0 {
-				// 写入bytes
-				cntWrited, writeErr := file.Write(buf[0:cnt])
-				// 数据长度大于0
-				if cntWrited > 0 {
-					written += int64(cntWrited)
-				}
+		if cnt > 0 {
+			// 写入bytes
+			cntWrited, writeErr := file.Write(buf[0:cnt])
+			// 数据长度大于0
+			if cntWrited > 0 {
+				written += int64(cntWrited)
+			}
 
-				// 写入出错
-				if writeErr != nil {
-					err = writeErr
-					break
-				}
-
-				// 读取是数据长度不等于写入的数据长度
-				if cnt != cntWrited {
-					err = io.ErrShortWrite
-					break
-				}
-			} else {
-				err = fmt.Errorf("readed count is %v", cnt)
+			// 写入出错
+			if writeErr != nil {
+				err = writeErr
 				break
 			}
-		} else {
+
+			// 读取是数据长度不等于写入的数据长度
+			if cnt != cntWrited {
+				err = io.ErrShortWrite
+				break
+			}
+		}
+
+		if readErr != nil {
 			if readErr != io.EOF {
 				err = readErr
 			}
